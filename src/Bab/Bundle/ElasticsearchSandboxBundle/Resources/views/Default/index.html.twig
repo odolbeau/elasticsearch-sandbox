@@ -8,11 +8,11 @@
             {% for result in results %}
                 <div class="media">
                     <a class="pull-left" href="#">
-                        <img class="media-object" src="{{ result._source.user.profile_image_url_https }}" alt="{{ result._source.user.name }}">
+                        <img class="media-object" src="{{ result.user.profile_image_url_https }}" alt="{{ result.user.name }}">
                     </a>
                     <div class="media-body">
-                        <h4 class="media-heading">{{ result._source.user.name }} (@{{ result._source.user.screen_name }})</h4>
-                        <p>{{ result._source.text }}</p>
+                        <h4 class="media-heading">{{ result.user.name }} (@{{ result.user.screen_name }})</h4>
+                        <p>{{ result.text }}</p>
                     </div>
                 </div>
             {% endfor %}

@@ -13,8 +13,22 @@ class DefaultController extends Controller
             'type'  => 'status'
         ));
 
+        $results = array();
+        array_walk($response['hits']['hits'], function ($value) use (&$results) {
+            $results[$value['_id']] = $value['_source'];
+        });
+
+        //$search = new \Elastica\Search($this->container->get('client.elastica'));
+        //$response = $search->addIndex('twitter_river')->search();
+        //$responseResults = $response->getResults();
+
+        //$results = array();
+        //array_walk($responseResults, function ($value) use (&$results) {
+            //$results[$value->getId()] = $value->getData();
+        //});
+
         return $this->render('BabElasticsearchSandboxBundle:Default:index.html.twig', array(
-            'results' => $response['hits']['hits']
+            'results' => $results
         ));
     }
 }
