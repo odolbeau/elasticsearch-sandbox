@@ -1,0 +1,4 @@
+bab_elasticsearch_sandbox:
+    resource: "@BabElasticsearchSandboxBundle/Resources/config/routing.yml"
+    prefix:   /
+

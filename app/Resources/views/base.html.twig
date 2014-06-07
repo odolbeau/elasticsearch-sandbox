@@ -1,13 +1,44 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
-        <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="Just a simple website to play with elasticsearch">
+        <meta name="author" content="Olivier Dolbeau">
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+
+        <title>{% block title %}Elasticsearch sandbox{% endblock %}</title>
+
+        <link href="{{ asset('assets/build/elasticsearch-sandbox.css') }}" rel="stylesheet" type="text/css" />
+
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
     </head>
+
     <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
+
+        <div class="container">
+            <div class="header">
+                <ul class="nav nav-pills pull-right">
+                <li class="active"><a href="#">Home</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Contact</a></li>
+                </ul>
+                <h3 class="text-muted">Elasticsearch sandbox</h3>
+            </div>
+
+                {% block body %}{% endblock %}
+
+            <div class="footer">
+                <p>&copy; Company 2014</p>
+            </div>
+
+        </div> <!-- /container -->
+
+        <script src="{{ asset('assets/build/elasticsearch-sandbox.js') }}"></script>
     </body>
 </html>
