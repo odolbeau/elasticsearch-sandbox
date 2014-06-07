@@ -8,13 +8,10 @@
     <parameters>
         <parameter key="bab_elasticsearch_sandbox.example.class">Bab\Bundle\ElasticsearchSandboxBundle\Example</parameter>
     </parameters>
+    -->
 
     <services>
-        <service id="bab_elasticsearch_sandbox.example" class="%bab_elasticsearch_sandbox.example.class%">
-            <argument type="service" id="service_id" />
-            <argument>plain_value</argument>
-            <argument>%parameter_name%</argument>
+        <service id="client.elasticsearch" class="Elasticsearch\Client">
         </service>
     </services>
-    -->
 </container>
