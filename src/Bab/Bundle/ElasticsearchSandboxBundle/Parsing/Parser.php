@@ -33,13 +33,21 @@ class Parser
             $expectedType = array();
             switch ($currentType) {
                 case Lexer::T_SELECTOR:
-                    $expectedType = [Lexer::T_MENTION, LEXER::T_RETWEET];
+                    $expectedType = [Lexer::T_TWEET, Lexer::T_MENTION, LEXER::T_RETWEET];
+                    continue;
+                case Lexer::T_TWEET:
                     continue;
                 case Lexer::T_MENTION:
                     $filters[] = new \Elastica\Filter\Exists(array('mention'));
                     continue;
                 case Lexer::T_RETWEET:
                     $filters[] = new \Elastica\Filter\Exists(array('retweet'));
+                    continue;
+                case Lexer::T_FROM:
+                    $expectedType = [Lexer::T_USERNAME];
+                    continue;
+                case Lexer::T_USERNAME:
+                    $filters[] = new \Elastica\Filter\Terms('user.screen_name', array($value));
                     continue;
                 default:
                     throw new \InvalidArgumentException(sprintf(
