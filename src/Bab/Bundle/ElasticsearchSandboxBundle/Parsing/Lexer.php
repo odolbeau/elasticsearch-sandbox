@@ -25,7 +25,7 @@ class Lexer extends AbstractLexer
         $class = new \ReflectionClass(__CLASS__);
         $constants = array_flip($class->getConstants());
 
-        if (!in_array($constant, $constants)) {
+        if (!isset($constants[$constant])) {
             throw new \InvalidArgumentException(sprintf(
                 'Unknown constant %s',
                 $constant
