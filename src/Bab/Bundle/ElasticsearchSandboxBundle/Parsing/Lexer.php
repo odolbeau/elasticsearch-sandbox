@@ -7,11 +7,11 @@ use Doctrine\Common\Lexer\AbstractLexer;
 class Lexer extends AbstractLexer
 {
     const T_SELECTOR = 1;
-    const T_TWEET= 2;
-    const T_MENTION= 3;
-    const T_RETWEET= 4;
-    const T_FROM= 5;
-    const T_USERNAME= 6;
+    const T_TWEET    = 2;
+    const T_MENTION  = 3;
+    const T_RETWEET  = 4;
+    const T_FROM     = 5;
+    const T_USERNAME = 6;
 
     /**
      * getConstantName
