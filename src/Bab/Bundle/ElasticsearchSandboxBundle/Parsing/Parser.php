@@ -24,16 +24,13 @@ class Parser
 
         $query = null;
         $filters = array();
-        $expectedType = array();
         while ($this->lexer->moveNext()) {
             $currentType = $this->lexer->lookahead['type'];
-            $this->checkExpectedType($currentType, $expectedType);
 
             $value = $this->lexer->lookahead['value'];
-            $expectedType = array();
             switch ($currentType) {
                 case Lexer::T_SELECTOR:
-                    $expectedType = [Lexer::T_TWEET, Lexer::T_MENTION, LEXER::T_RETWEET];
+                    $this->expect([Lexer::T_TWEET, Lexer::T_MENTION, LEXER::T_RETWEET]);
                     continue;
                 case Lexer::T_TWEET:
                     continue;
@@ -44,7 +41,7 @@ class Parser
                     $filters[] = new \Elastica\Filter\Exists(array('retweet'));
                     continue;
                 case Lexer::T_FROM:
-                    $expectedType = [Lexer::T_USERNAME];
+                    $this->expect([Lexer::T_USERNAME]);
                     continue;
                 case Lexer::T_USERNAME:
                     $filters[] = new \Elastica\Filter\Terms('user.screen_name', array($value));
@@ -78,34 +75,29 @@ class Parser
     }
 
     /**
-     * checkExpectedType
+     * expect
      *
-     * Throw an exception if currentType don't equals to one of the
-     * expectedType.
+     * @param array $tokens
      *
-     * @param string $currentType
-     * @param array $expectedType
+     * @throw InvalidArgumentException
      *
      * @return void
      */
-    protected function checkExpectedType($currentType, array $expectedType)
+    private function expect(array $tokens)
     {
-        if (0 === count($expectedType)) {
-            return;
-        }
-        if (in_array($currentType, $expectedType)) {
+        if ($this->lexer->isNextTokenAny($tokens)) {
             return;
         }
 
         $typesToString = array();
-        array_walk($expectedType, function($value) use (&$typesToString) {
+        array_walk($tokens, function($value) use (&$typesToString) {
             $typesToString[] = $this->lexer->getConstantName($value);
         });
 
         throw new \InvalidArgumentException(sprintf(
             'Expected token of type: ["%s"]. "%s" given.',
             implode('", "', $typesToString),
-            $this->lexer->getConstantName($currentType)
+            $this->lexer->getConstantName($this->lexer->lookahead['type'])
         ));
     }
 }

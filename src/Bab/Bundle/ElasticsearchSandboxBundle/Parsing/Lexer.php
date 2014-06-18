@@ -22,17 +22,9 @@ class Lexer extends AbstractLexer
      */
     public function getConstantName($constant)
     {
-        $class = new \ReflectionClass(__CLASS__);
-        $constants = array_flip($class->getConstants());
+        $litteral = $this->getLiteral($constant);
 
-        if (!isset($constants[$constant])) {
-            throw new \InvalidArgumentException(sprintf(
-                'Unknown constant %s',
-                $constant
-            ));
-        }
-
-        return $constants[$constant];
+        return substr($litteral, strpos($litteral, '::') + 2);
     }
 
     /**
