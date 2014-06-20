@@ -21,13 +21,14 @@ class Parser
     public function parse($string)
     {
         $this->lexer->setInput($string);
+        $this->lexer->moveNext();
 
         $query = null;
         $filters = array();
         while ($this->lexer->moveNext()) {
-            $currentType = $this->lexer->lookahead['type'];
+            $currentType = $this->lexer->token['type'];
 
-            $value = $this->lexer->lookahead['value'];
+            $value = $this->lexer->token['value'];
             switch ($currentType) {
                 case Lexer::T_SELECTOR:
                     $this->expect([Lexer::T_TWEET, Lexer::T_MENTION, LEXER::T_RETWEET]);
@@ -49,7 +50,7 @@ class Parser
                 default:
                     throw new \InvalidArgumentException(sprintf(
                         'Can\'t deal with "%s".',
-                        $this->lexer->lookahead['value']
+                        $this->lexer->token['value']
                     ));
             }
         }
