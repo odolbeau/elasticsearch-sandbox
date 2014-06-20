@@ -22,10 +22,11 @@ class Parser
     {
         $this->lexer->setInput($string);
         $this->lexer->moveNext();
+        $this->lexer->moveNext();
 
         $query = null;
         $filters = array();
-        while ($this->lexer->moveNext()) {
+        while (null !== $this->lexer->token) {
             $currentType = $this->lexer->token['type'];
 
             $value = $this->lexer->token['value'];
@@ -53,6 +54,8 @@ class Parser
                         $this->lexer->token['value']
                     ));
             }
+
+            $this->lexer->moveNext();
         }
 
         $query = new \Elastica\Query();
