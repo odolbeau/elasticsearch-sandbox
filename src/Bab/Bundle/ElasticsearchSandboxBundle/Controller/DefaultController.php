@@ -32,6 +32,7 @@ class DefaultController extends Controller
         }
 
         $query->setSize(5);
+        $query->setSort(array('created_at' => 'desc'));
 
         // Make the search
         $search = new \Elastica\Search($this->container->get('client.elastica'));
